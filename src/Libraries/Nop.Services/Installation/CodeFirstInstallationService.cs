@@ -6786,6 +6786,8 @@ namespace Nop.Services.Installation
                 ReCaptchaTheme = string.Empty,
                 AutomaticallyChooseLanguage = true,
                 Enabled = false,
+                CaptchaType = CaptchaType.CheckBoxReCaptchaV2,
+                ReCaptchaV3ScoreThreshold = 0.5,
                 ShowOnApplyVendorPage = false,
                 ShowOnBlogCommentPage = false,
                 ShowOnContactUsPage = false,

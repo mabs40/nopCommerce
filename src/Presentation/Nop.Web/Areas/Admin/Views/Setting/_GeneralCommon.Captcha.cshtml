@@ -13,6 +13,26 @@
         </div>
     </div>
     <nop-nested-setting asp-for="CaptchaSettings.Enabled">
+        <div class="form-group" id="ssCaptchaTypepnl">
+            <div class="col-md-3">
+                <nop-override-store-checkbox asp-for="CaptchaSettings.CaptchaType_OverrideForStore" asp-input="CaptchaSettings.CaptchaType" asp-store-scope="@Model.ActiveStoreScopeConfiguration" />
+                <nop-label asp-for="CaptchaSettings.CaptchaType" />
+            </div>
+            <div class="col-md-9">
+                <nop-select asp-for="CaptchaSettings.CaptchaType" asp-items="Model.CaptchaSettings.CaptchaTypeValues" />
+                <span asp-validation-for="CaptchaSettings.CaptchaType"></span>
+            </div>
+        </div>
+        <div class="form-group" id="ssReCaptchaV3ScoreThresholdpnl">
+            <div class="col-md-3">
+                <nop-override-store-checkbox asp-for="CaptchaSettings.ReCaptchaV3ScoreThreshold_OverrideForStore" asp-input="CaptchaSettings.ReCaptchaV3ScoreThreshold" asp-store-scope="@Model.ActiveStoreScopeConfiguration" />
+                <nop-label asp-for="CaptchaSettings.ReCaptchaV3ScoreThreshold" />
+            </div>
+            <div class="col-md-9">
+                <nop-editor asp-for="CaptchaSettings.ReCaptchaV3ScoreThreshold" />
+                <span asp-validation-for="CaptchaSettings.ReCaptchaV3ScoreThreshold"></span>
+            </div>
+        </div>
         <div class="form-group" id="ssCaptchaShowOnLoginPagepnl">
             <div class="col-md-3">
                 <nop-override-store-checkbox asp-for="CaptchaSettings.ShowOnLoginPage_OverrideForStore" asp-input="CaptchaSettings.ShowOnLoginPage" asp-store-scope="@Model.ActiveStoreScopeConfiguration" />
@@ -35,7 +55,7 @@
         </div>
         <div class="form-group" id="ssCaptchaShowOnForgotPassworPagepnl">
             <div class="col-md-3">
-                <nop-override-store-checkbox asp-for="CaptchaSettings.ShowOnForgotPasswordPage_OverrideForStore" asp-input="CaptchaSettings.ShowOnRegistrationPage" asp-store-scope="@Model.ActiveStoreScopeConfiguration" />
+                <nop-override-store-checkbox asp-for="CaptchaSettings.ShowOnForgotPasswordPage_OverrideForStore" asp-input="CaptchaSettings.ShowOnForgotPasswordPage" asp-store-scope="@Model.ActiveStoreScopeConfiguration" />
                 <nop-label asp-for="CaptchaSettings.ShowOnForgotPasswordPage" />
             </div>
             <div class="col-md-9">
@@ -147,12 +167,21 @@
 </div>
 <script>
     $(document).ready(function () {
+        $('#@Html.IdFor(model => model.CaptchaSettings.CaptchaType)').change(toggleReCaptchaV3ScoreThreshold);
         $("#@Html.IdFor(model => model.CaptchaSettings.Enabled)").click(toggleReCaptcha);
         toggleReCaptcha();
     });
 
+    function toggleReCaptchaV3ScoreThreshold() {
+        if ($('#@Html.IdFor(model => model.CaptchaSettings.CaptchaType)').find(':selected').val() === '20')
+            $('#ssReCaptchaV3ScoreThresholdpnl').show();
+        else
+            $('#ssReCaptchaV3ScoreThresholdpnl').hide();
+    }
+
     function toggleReCaptcha() {
         if ($('#@Html.IdFor(model => model.CaptchaSettings.Enabled)').is(':checked')) {
+            $('#ssCaptchaTypepnl').show();
             $('#ssCaptchaShowOnLoginPagepnl').show();
             $('#ssCaptchaShowOnRegistrationPagepnl').show();
             $('#ssCaptchaShowOnForgotPassworPagepnl').show();
@@ -166,7 +195,10 @@
             $('#ssCaptchaShowOnForumpnl').show();
             $('#ssReCaptchaPublicKeypnl').show();
             $('#ssReCaptchaPrivateKeypnl').show();
+            toggleReCaptchaV3ScoreThreshold();
         } else {
+            $('#ssCaptchaTypepnl').hide();
+            $('#ssReCaptchaV3ScoreThresholdpnl').hide();
             $('#ssCaptchaShowOnLoginPagepnl').hide();
             $('#ssCaptchaShowOnRegistrationPagepnl').hide();
             $('#ssCaptchaShowOnForgotPassworPagepnl').hide();
