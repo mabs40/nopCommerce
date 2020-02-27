@@ -14,7 +14,7 @@
     </div>
     <div class="page-body">
         @if (!Model.SubscriptionAllowed)
-            {
+        {
             <div>
                 @T("BackInStockSubscriptions.NotAllowed")
             </div>
@@ -58,7 +58,7 @@
                                 alert('Failed to change subscription.');
                             }
                         });
-
+                        displayBarNotification('@(Model.AlreadySubscribed ? "Unsubscribed" : "Subscribed")', "success", 3500);
                     });
                 });
             </script>
