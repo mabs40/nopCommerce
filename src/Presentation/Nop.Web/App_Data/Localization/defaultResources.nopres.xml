@@ -17928,6 +17928,9 @@
   <LocaleResource Name="ShoppingCart.Totals.CalculatedDuringCheckout">
     <Value>Calculated during checkout</Value>
   </LocaleResource>
+  <LocaleResource Name="ShoppingCart.Totals.FreeShippingMsg">
+    <Value>You can get Free Shipping with buying products for</Value>
+  </LocaleResource>
   <LocaleResource Name="ShoppingCart.Totals.GiftCardInfo">
     <Value>Gift Card</Value>
   </LocaleResource>

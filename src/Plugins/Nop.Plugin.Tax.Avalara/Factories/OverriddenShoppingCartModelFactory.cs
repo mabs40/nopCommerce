@@ -332,6 +332,7 @@ namespace Nop.Plugin.Tax.Avalara.Factories
                 var shippingRateComputationMethods = _shippingPluginManager.LoadActivePlugins(_workContext.CurrentCustomer, _storeContext.CurrentStore.Id);
 
                 //shipping info
+                var isFreeShipping = _orderTotalCalculationService.IsFreeShipping(cart, subtotal);
                 model.RequiresShipping = _shoppingCartService.ShoppingCartRequiresShipping(cart);
                 if (model.RequiresShipping)
                 {
@@ -340,6 +341,14 @@ namespace Nop.Plugin.Tax.Avalara.Factories
                     {
                         var shoppingCartShipping = _currencyService.ConvertFromPrimaryStoreCurrency(shoppingCartShippingBase.Value, _workContext.WorkingCurrency);
                         model.Shipping = _priceFormatter.FormatShippingPrice(shoppingCartShipping, true);
+
+                        var moneyRemainingForFreeShipping = _orderTotalCalculationService.FreeShippingCalculate(cart, subtotal);
+                        if (!isFreeShipping)
+                            model.MoneyRemainingForFreeShipping = _priceFormatter.FormatShippingPrice(moneyRemainingForFreeShipping, true);
+                        else
+                        {
+                            model.Shipping = _priceFormatter.FormatShippingPrice(decimal.Zero, true);
+                        }
 
                         //selected shipping method
                         var shippingOption = _genericAttributeService.GetAttribute<ShippingOption>(_workContext.CurrentCustomer,
@@ -421,6 +430,8 @@ namespace Nop.Plugin.Tax.Avalara.Factories
                 {
                     var shoppingCartTotal = _currencyService.ConvertFromPrimaryStoreCurrency(shoppingCartTotalBase.Value, _workContext.WorkingCurrency);
                     model.OrderTotal = _priceFormatter.FormatPrice(shoppingCartTotal, true, false);
+                    if (isFreeShipping)
+                        model.OrderTotal = model.SubTotal;
                 }
 
                 //discount

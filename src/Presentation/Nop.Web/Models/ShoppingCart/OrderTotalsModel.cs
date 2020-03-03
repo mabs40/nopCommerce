@@ -37,6 +37,7 @@ namespace Nop.Web.Models.ShoppingCart
         public int WillEarnRewardPoints { get; set; }
 
         public string OrderTotal { get; set; }
+        public string MoneyRemainingForFreeShipping { get; set; }
 
         #region Nested classes
 

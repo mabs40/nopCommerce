@@ -1108,7 +1108,6 @@ namespace Nop.Services.Orders
 
                             fixedRate += fixedRateTmp.Value;
                         }
-
                         if (fixedRate.HasValue)
                         {
                             //adjust shipping rate
@@ -1468,6 +1467,31 @@ namespace Nop.Services.Orders
 
             var points = (int)Math.Truncate(amount / _rewardPointsSettings.PointsForPurchases_Amount * _rewardPointsSettings.PointsForPurchases_Points);
             return points;
+        }
+
+        /// <summary>
+        /// Calculates how much money is remaining for free shipping
+        /// </summary>
+        /// <param name="cart">Cart</param>
+        /// <param name="subTotal">Subtotal amount; pass null to calculate subtotal</param>
+        /// <returns>A value indicating whether shipping is free</returns>
+        public virtual decimal FreeShippingCalculate(IList<ShoppingCartItem> cart, decimal? subTotal = null)
+        {
+            if (!subTotal.HasValue)
+            {
+                GetShoppingCartSubTotal(cart, _shippingSettings.FreeShippingOverXIncludingTax, out _, out _, out _, out var subTotalWithDiscount);
+                subTotal = subTotalWithDiscount;
+            }
+
+            //check whether we have subtotal enough to have free shipping
+            if (subTotal.Value < _shippingSettings.FreeShippingOverXValue)
+            {
+                //calculate money remaining for free shipment
+                var moneyRemaining = _shippingSettings.FreeShippingOverXValue - subTotal.Value;
+                return moneyRemaining;
+            }
+                 
+            return decimal.Zero;
         }
 
         #endregion

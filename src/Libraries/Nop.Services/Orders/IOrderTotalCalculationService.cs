@@ -197,5 +197,13 @@ namespace Nop.Services.Orders
         /// <param name="amount">Amount (in primary store currency)</param>
         /// <returns>Number of reward points</returns>
         int CalculateRewardPoints(Customer customer, decimal amount);
+
+        /// <summary>
+        /// Calculates how much money is remaining for free shipping
+        /// </summary>
+        /// <param name="cart">Cart</param>
+        /// <param name="subTotal">Subtotal amount; pass null to calculate subtotal</param>
+        /// <returns>A value indicating whether shipping is free</returns>
+        decimal FreeShippingCalculate(IList<ShoppingCartItem> cart, decimal? subTotal = null);
     }
 }

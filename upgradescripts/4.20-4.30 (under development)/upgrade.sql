@@ -262,6 +262,9 @@ set @resources='
   <LocaleResource Name="Admin.Configuration.Settings.Catalog.ProductSearchEnabled.Hint">
     <Value>Check to enabled the search box.</Value>
   </LocaleResource>
+  <LocaleResource Name="ShoppingCart.Totals.FreeShippingMsg">
+    <Value>You can get Free Shipping with buying products for</Value>
+  </LocaleResource>
 </Language>
 '
 

@@ -3457,6 +3457,24 @@ label, label + * {
 	padding: 5px 30px 15px;
 }
 
+.cart-footer .free-shipping-message {
+  border-radius: 10px;
+  background: rgba(75, 176, 122, 0.4);
+  padding: 6px;
+  padding-bottom: 35px;
+  width: 312px;
+  height: 43px;
+  color: #ffffff;
+  text-align: center;
+  font-size: 14px;
+}
+
+#MoneyRemainingForFreeShipping {
+  font-style: italic;
+  font-size: 16px;
+  font-weight: bold;
+}
+
 .cart-total td {
 	width: 50%;
 	padding: 5px 0;
