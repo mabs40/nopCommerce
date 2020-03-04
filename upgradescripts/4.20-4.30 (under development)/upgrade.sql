@@ -349,6 +349,12 @@ set @resources='
   <LocaleResource Name="Admin.System.Maintenance.DeleteAlreadySentQueuedEmails.TotalDeleted">
     <Value>{0} emails were deleted</Value>
   </LocaleResource>
+  <LocaleResource Name="Admin.Configuration.Settings.GeneralCommon.ForceSslForAllPages">
+    <Value></Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Configuration.Settings.GeneralCommon.ForceSslForAllPages.Hint">
+    <Value></Value>
+  </LocaleResource>
 </Language>
 '
 
@@ -2299,4 +2305,10 @@ INSERT [dbo].[MigrationVersionInfo] ([AppliedOn], [Description], [Version]) VALU
 INSERT [dbo].[MigrationVersionInfo] ([AppliedOn], [Description], [Version]) VALUES (CAST(N'2020-03-10T15:24:32.0000000' AS DateTime2), N'AddProductDeleteIdIX', 637123521091647940)
 INSERT [dbo].[MigrationVersionInfo] ([AppliedOn], [Description], [Version]) VALUES (CAST(N'2020-03-10T15:24:33.0000000' AS DateTime2), N'AddGetLowStockProductsIX', 637123521091647941)
 INSERT [dbo].[MigrationVersionInfo] ([AppliedOn], [Description], [Version]) VALUES (CAST(N'2020-03-10T15:24:33.0000000' AS DateTime2), N'AddPMMProductManufacturerIX', 637123521091647942)
+GO
+GO
+
+--delete setting
+DELETE FROM [Setting]
+WHERE [Name] = N'securitysettings.forcesslforallpages'
 GO
