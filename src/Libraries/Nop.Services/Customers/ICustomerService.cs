@@ -86,6 +86,18 @@ namespace Nop.Services.Customers
         void DeleteCustomer(Customer customer);
 
         /// <summary>
+        /// Gets built-in system record used for background tasks
+        /// </summary>
+        /// <returns>A customer object</returns>
+        Customer GetBackgroundTaskUser();
+
+        /// <summary>
+        /// Gets built-in system guest record used for requests from search engines
+        /// </summary>
+        /// <returns>A customer object</returns>
+        Customer GetSearchEngineUser();
+
+        /// <summary>
         /// Gets a customer
         /// </summary>
         /// <param name="customerId">Customer identifier</param>
