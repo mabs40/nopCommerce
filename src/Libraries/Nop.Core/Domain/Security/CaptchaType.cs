@@ -1,7 +1,7 @@
 ﻿namespace Nop.Core.Domain.Security
 {
     /// <summary>
-    /// Represents an captcha type
+    /// Represents an type of the captcha
     /// </summary>
     public enum CaptchaType
     {

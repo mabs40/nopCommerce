@@ -173,7 +173,8 @@
     });
 
     function toggleReCaptchaV3ScoreThreshold() {
-        if ($('#@Html.IdFor(model => model.CaptchaSettings.CaptchaType)').find(':selected').val() === '20')
+        var reCaptchaV3 = "@((int)Nop.Core.Domain.Security.CaptchaType.ReCaptchaV3)";
+        if ($('#@Html.IdFor(model => model.CaptchaSettings.CaptchaType)').val() === reCaptchaV3)
             $('#ssReCaptchaV3ScoreThresholdpnl').show();
         else
             $('#ssReCaptchaV3ScoreThresholdpnl').hide();

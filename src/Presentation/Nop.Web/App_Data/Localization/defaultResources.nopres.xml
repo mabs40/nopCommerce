@@ -6652,10 +6652,10 @@
     <Value>Check to show CAPTCHA on registration page.</Value>
   </LocaleResource>
   <LocaleResource Name="Admin.Configuration.Settings.GeneralCommon.CaptchaType">
-    <Value>Captcha type</Value>
+    <Value>Type of the captcha</Value>
   </LocaleResource>
   <LocaleResource Name="Admin.Configuration.Settings.GeneralCommon.CaptchaType.Hint">
-    <Value>Select a captcha type.</Value>
+    <Value>Select a type of the captcha. Also check if 'reCAPTCHA public key' and 'reCAPTCHA private key' fields uses the same reCAPTCHA version.</Value>
   </LocaleResource>
   <LocaleResource Name="Admin.Configuration.Settings.GeneralCommon.CaptchaShowOnForgotPasswordPage">
     <Value>Show on forgot password page</Value>
@@ -15532,7 +15532,7 @@
     <Value>Voided</Value>
   </LocaleResource>
   <LocaleResource Name="Enums.Nop.Core.Domain.Security.CaptchaType.CheckBoxReCaptchaV2">
-    <Value>reCAPTCHA v2 checkbox</Value>
+    <Value>reCAPTCHA v2 ("I'm not a robot" Checkbox)</Value>
   </LocaleResource>
   <LocaleResource Name="Enums.Nop.Core.Domain.Security.CaptchaType.ReCaptchaV3">
     <Value>reCAPTCHA v3</Value>

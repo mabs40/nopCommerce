@@ -55,15 +55,15 @@ namespace Nop.Web.Framework.TagHelpers.Public
             var viewContextAware = _htmlHelper as IViewContextAware;
             viewContextAware?.Contextualize(ViewContext);
 
-            IHtmlContent captchaHtmlContent = null;
+            IHtmlContent captchaHtmlContent;
             switch (_captchaSettings.CaptchaType)
             {
                 case CaptchaType.CheckBoxReCaptchaV2:
                     output.Attributes.Add("class", "captcha-box");
-                    captchaHtmlContent = _htmlHelper.GenerateCheckBoxReCaptchaV2();
+                    captchaHtmlContent = _htmlHelper.GenerateCheckBoxReCaptchaV2(_captchaSettings);
                     break;
                 case CaptchaType.ReCaptchaV3:
-                    captchaHtmlContent = _htmlHelper.GenerateReCaptchaV3();
+                    captchaHtmlContent = _htmlHelper.GenerateReCaptchaV3(_captchaSettings);
                     break;
                 default:
                     throw new InvalidOperationException("Invalid captcha type.");

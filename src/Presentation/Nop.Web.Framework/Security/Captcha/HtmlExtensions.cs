@@ -21,11 +21,10 @@ namespace Nop.Web.Framework.Security.Captcha
         /// Generate reCAPTCHA Control
         /// </summary>
         /// <param name="helper">HTML helper</param>
+        /// <param name="captchaSettings">Captcha settings</param>
         /// <returns>Result</returns>
-        public static IHtmlContent GenerateCheckBoxReCaptchaV2(this IHtmlHelper helper)
+        public static IHtmlContent GenerateCheckBoxReCaptchaV2(this IHtmlHelper helper, CaptchaSettings captchaSettings)
         {
-            var captchaSettings = EngineContext.Current.Resolve<CaptchaSettings>();
-
             //prepare language
             var language = GetReCaptchaLanguage(captchaSettings);
 
@@ -70,11 +69,10 @@ namespace Nop.Web.Framework.Security.Captcha
         /// Generate reCAPTCHA v3 Control
         /// </summary>
         /// <param name="helper">HTML helper</param>
+        /// <param name="captchaSettings">Captcha settings</param>
         /// <returns>Result</returns>
-        public static IHtmlContent GenerateReCaptchaV3(this IHtmlHelper helper)
+        public static IHtmlContent GenerateReCaptchaV3(this IHtmlHelper helper, CaptchaSettings captchaSettings)
         {
-            var captchaSettings = EngineContext.Current.Resolve<CaptchaSettings>();
-
             //prepare language
             var language = GetReCaptchaLanguage(captchaSettings);
 

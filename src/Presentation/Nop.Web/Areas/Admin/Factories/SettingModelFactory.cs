@@ -497,26 +497,9 @@ namespace Nop.Web.Areas.Admin.Factories
             var captchaSettings = _settingService.LoadSetting<CaptchaSettings>(storeId);
 
             //fill in model values from the entity
-            var model = new CaptchaSettingsModel()
-            {
-                Enabled = captchaSettings.Enabled,
-                ShowOnLoginPage = captchaSettings.ShowOnLoginPage,
-                ShowOnRegistrationPage = captchaSettings.ShowOnRegistrationPage,
-                ShowOnContactUsPage = captchaSettings.ShowOnContactUsPage,
-                ShowOnEmailWishlistToFriendPage = captchaSettings.ShowOnEmailWishlistToFriendPage,
-                ShowOnEmailProductToFriendPage = captchaSettings.ShowOnEmailProductToFriendPage,
-                ShowOnBlogCommentPage = captchaSettings.ShowOnBlogCommentPage,
-                ShowOnNewsCommentPage = captchaSettings.ShowOnNewsCommentPage,
-                ShowOnProductReviewPage = captchaSettings.ShowOnProductReviewPage,
-                ShowOnApplyVendorPage = captchaSettings.ShowOnApplyVendorPage,
-                ShowOnForgotPasswordPage = captchaSettings.ShowOnForgotPasswordPage,
-                ShowOnForum = captchaSettings.ShowOnForum,
-                ReCaptchaPublicKey = captchaSettings.ReCaptchaPublicKey,
-                ReCaptchaPrivateKey = captchaSettings.ReCaptchaPrivateKey,
-                CaptchaType = (int)captchaSettings.CaptchaType,
-                CaptchaTypeValues = captchaSettings.CaptchaType.ToSelectList(),
-                ReCaptchaV3ScoreThreshold = captchaSettings.ReCaptchaV3ScoreThreshold
-            };
+            var model = captchaSettings.ToSettingsModel<CaptchaSettingsModel>();
+
+            model.CaptchaTypeValues = captchaSettings.CaptchaType.ToSelectList();
 
             if (storeId <= 0)
                 return model;
