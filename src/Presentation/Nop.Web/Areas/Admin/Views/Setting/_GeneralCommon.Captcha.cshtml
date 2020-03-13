@@ -1,4 +1,5 @@
 @model GeneralCommonSettingsModel
+@using Nop.Core.Domain.Security
 
 <div class="panel-body">
     @T("Admin.Configuration.Settings.GeneralCommon.Captcha.Instructions")
@@ -173,7 +174,7 @@
     });
 
     function toggleReCaptchaV3ScoreThreshold() {
-        var reCaptchaV3 = "@((int)Nop.Core.Domain.Security.CaptchaType.ReCaptchaV3)";
+        var reCaptchaV3 = "@((int)CaptchaType.ReCaptchaV3)";
         if ($('#@Html.IdFor(model => model.CaptchaSettings.CaptchaType)').val() === reCaptchaV3)
             $('#ssReCaptchaV3ScoreThresholdpnl').show();
         else

@@ -13,7 +13,7 @@ namespace Nop.Core.Domain.Security
         public bool Enabled { get; set; }
 
         /// <summary>
-        /// type of the captcha
+        /// type of reCAPTCHA
         /// </summary>
         public CaptchaType CaptchaType { get; set; }
 

@@ -326,10 +326,10 @@ set @resources='
     <Value>Search by a specific county / region.</Value>
   </LocaleResource>
     <LocaleResource Name="Admin.Configuration.Settings.GeneralCommon.CaptchaType">
-    <Value>Type of the captcha</Value>
+    <Value>Type of reCAPTCHA</Value>
   </LocaleResource>
   <LocaleResource Name="Admin.Configuration.Settings.GeneralCommon.CaptchaType.Hint">
-    <Value>Select a type of the captcha. Also check if ''reCAPTCHA public key'' and ''reCAPTCHA private key'' fields uses the same reCAPTCHA version.</Value>
+    <Value>Select a type of reCAPTCHA. Also check if ''reCAPTCHA public key'' and ''reCAPTCHA private key'' fields uses the same reCAPTCHA version.</Value>
   </LocaleResource>
   <LocaleResource Name="Admin.Configuration.Settings.GeneralCommon.reCaptchaV3ScoreThreshold">
     <Value>reCAPTCHA v3 score threshold</Value>
