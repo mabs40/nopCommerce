@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Text.Encodings.Web;
 using Microsoft.AspNetCore.Mvc;
@@ -10,12 +9,10 @@ using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
-using Microsoft.AspNetCore.Mvc.ViewFeatures.Internal;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
 using Nop.Core;
 using Nop.Core.Infrastructure;
-using Nop.Services.Catalog;
 using Nop.Services.Localization;
 using Nop.Web.Framework.Models;
 using Nop.Web.Framework.Mvc.Filters;
@@ -73,27 +70,25 @@ namespace Nop.Web.Framework.Controllers
                 //TODO tempData = _tempDataDictionaryFactory.GetTempData(context.HttpContext);
             }
 
-            using (var writer = new StringWriter())
-            {
-                var viewContext = new ViewContext(
-                    context,
-                    NullView.Instance,
-                    viewData,
-                    tempData,
-                    writer,
-                    new HtmlHelperOptions());
+            using var writer = new StringWriter();
+            var viewContext = new ViewContext(
+                context,
+                NullView.Instance,
+                viewData,
+                tempData,
+                writer,
+                new HtmlHelperOptions());
 
-                // IViewComponentHelper is stateful, we want to make sure to retrieve it every time we need it.
-                var viewComponentHelper = context.HttpContext.RequestServices.GetRequiredService<IViewComponentHelper>();
-                (viewComponentHelper as IViewContextAware)?.Contextualize(viewContext);
+            // IViewComponentHelper is stateful, we want to make sure to retrieve it every time we need it.
+            var viewComponentHelper = context.HttpContext.RequestServices.GetRequiredService<IViewComponentHelper>();
+            (viewComponentHelper as IViewContextAware)?.Contextualize(viewContext);
 
-                var result = viewComponentResult.ViewComponentType == null ?
-                    viewComponentHelper.InvokeAsync(viewComponentResult.ViewComponentName, viewComponentResult.Arguments) :
-                    viewComponentHelper.InvokeAsync(viewComponentResult.ViewComponentType, viewComponentResult.Arguments);
+            var result = viewComponentResult.ViewComponentType == null ? 
+                viewComponentHelper.InvokeAsync(viewComponentResult.ViewComponentName, viewComponentResult.Arguments):
+                viewComponentHelper.InvokeAsync(viewComponentResult.ViewComponentType, viewComponentResult.Arguments);
 
-                result.Result.WriteTo(writer, HtmlEncoder.Default);
-                return writer.ToString();
-            }
+            result.Result.WriteTo(writer, HtmlEncoder.Default);
+            return writer.ToString();
         }
 
         /// <summary>
@@ -155,14 +150,12 @@ namespace Nop.Web.Framework.Controllers
                 if (viewResult.View == null)
                     throw new ArgumentNullException($"{viewName} view was not found");
             }
-            using (var stringWriter = new StringWriter())
-            {
-                var viewContext = new ViewContext(actionContext, viewResult.View, ViewData, TempData, stringWriter, new HtmlHelperOptions());
+            using var stringWriter = new StringWriter();
+            var viewContext = new ViewContext(actionContext, viewResult.View, ViewData, TempData, stringWriter, new HtmlHelperOptions());
 
-                var t = viewResult.View.RenderAsync(viewContext);
-                t.Wait();
-                return stringWriter.GetStringBuilder().ToString();
-            }
+            var t = viewResult.View.RenderAsync(viewContext);
+            t.Wait();
+            return stringWriter.GetStringBuilder().ToString();
         }
 
         #endregion
@@ -215,7 +208,7 @@ namespace Nop.Web.Framework.Controllers
         /// <typeparam name="TLocalizedModelLocal">Localizable model</typeparam>
         /// <param name="languageService">Language service</param>
         /// <param name="locales">Locales</param>
-        protected virtual void AddLocales<TLocalizedModelLocal>(ILanguageService languageService,
+        protected virtual void AddLocales<TLocalizedModelLocal>(ILanguageService languageService, 
             IList<TLocalizedModelLocal> locales) where TLocalizedModelLocal : ILocalizedLocaleModel
         {
             AddLocales(languageService, locales, null);
@@ -228,7 +221,7 @@ namespace Nop.Web.Framework.Controllers
         /// <param name="languageService">Language service</param>
         /// <param name="locales">Locales</param>
         /// <param name="configure">Configure action</param>
-        protected virtual void AddLocales<TLocalizedModelLocal>(ILanguageService languageService,
+        protected virtual void AddLocales<TLocalizedModelLocal>(ILanguageService languageService, 
             IList<TLocalizedModelLocal> locales, Action<TLocalizedModelLocal, int> configure) where TLocalizedModelLocal : ILocalizedLocaleModel
         {
             foreach (var language in languageService.GetAllLanguages(true))
@@ -364,43 +357,6 @@ namespace Nop.Web.Framework.Controllers
             {
                 ViewData[dataKey] = tabName;
             }
-        }
-
-        /// <summary>
-        /// Product search auto complete
-        /// </summary>
-        /// <param name="term">Term is a keyword to search</param>
-        /// <param name="workContext">Product service</param>
-        /// <param name="productService">Represents work context</param>
-        public virtual IActionResult SearchAutoComplete(string term, IWorkContext workContext, IProductService productService)
-        {
-            const int searchTermMinimumLength = 3;
-            if (string.IsNullOrWhiteSpace(term) || term.Length < searchTermMinimumLength)
-                return Content(string.Empty);
-
-            //a vendor should have access only to his products
-            var vendorId = 0;
-            if (workContext.CurrentVendor != null)
-            {
-                vendorId = workContext.CurrentVendor.Id;
-            }
-
-            //products
-            const int productNumber = 15;
-            var products = productService.SearchProducts(
-                keywords: term,
-                vendorId: vendorId,
-                pageSize: productNumber,
-                showHidden: true);
-
-            var result = (from p in products
-                          select new
-                          {
-                              label = p.Name,
-                              productid = p.Id
-                          })
-                .ToList();
-            return Json(result);
         }
 
         #endregion

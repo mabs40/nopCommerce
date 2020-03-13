@@ -2191,8 +2191,6 @@ namespace Nop.Web.Areas.Admin.Controllers
                 OrderId = order.Id,
                 TrackingNumber = model.TrackingNumber,
                 TotalWeight = null,
-                ShippedDateUtc = model.CanShip ? DateTime.UtcNow : default(DateTime?),
-                DeliveryDateUtc = (model.CanShip && model.CanDeliver) ? DateTime.UtcNow : default(DateTime?),
                 AdminComment = model.AdminComment,
                 CreatedOnUtc = DateTime.UtcNow
             };
@@ -2294,12 +2292,18 @@ namespace Nop.Web.Areas.Admin.Controllers
                     CreatedOnUtc = DateTime.UtcNow
                 });
 
-                LogEditOrder(order.Id);
+                if(model.CanShip)
+                    _orderProcessingService.Ship(shipment, true);
 
+                if(model.CanShip && model.CanDeliver)
+                    _orderProcessingService.Deliver(shipment, true);
+
+                LogEditOrder(order.Id);
+                
                 _notificationService.SuccessNotification(_localizationService.GetResource("Admin.Orders.Shipments.Added"));
                 return continueEditing
-                           ? RedirectToAction("ShipmentDetails", new { id = shipment.Id })
-                           : RedirectToAction("Edit", new { id = model.OrderId });
+                        ? RedirectToAction("ShipmentDetails", new { id = shipment.Id })
+                        : RedirectToAction("Edit", new { id = model.OrderId });
             }
 
             _notificationService.ErrorNotification(_localizationService.GetResource("Admin.Orders.Shipments.NoProductsSelected"));
