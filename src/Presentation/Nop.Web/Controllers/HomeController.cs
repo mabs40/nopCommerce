@@ -2,8 +2,6 @@
 using Microsoft.Extensions.Caching.Memory;
 using Nop.Core.Caching;
 using Nop.Services.Caching.CachingDefaults;
-using Nop.Web.Framework.Mvc.Filters;
-using Nop.Web.Framework.Security;
 
 namespace Nop.Web.Controllers
 {
@@ -15,7 +13,6 @@ namespace Nop.Web.Controllers
             var c2 = NopBlogsCachingDefaults.BlogCommentsNumberCacheKey.FillCacheKey(4, 5, 6);
         }
 
-        [HttpsRequirement(SslRequirement.No)]
         public virtual IActionResult Index()
         {
             return View();
