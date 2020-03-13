@@ -167,6 +167,7 @@ namespace Nop.Services.Catalog
         /// true - load only "Published" products
         /// false - load only "Unpublished" products
         /// </param>
+        /// <param name="productTags">Filter products by product tags</param>
         /// <returns>Products</returns>
         IPagedList<Product> SearchProducts(
             out IList<int> filterableSpecificationAttributeOptionIds,
